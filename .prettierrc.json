@@ -1,0 +1,4 @@
+{
+  "endOfLine": "lf",
+  "overrides": [{ "files": "*.svg", "options": { "parser": "html" } }]
+}

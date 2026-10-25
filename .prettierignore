@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+output/
+test-results/
+test-results-production/
+playwright-report/
+package-lock.json
