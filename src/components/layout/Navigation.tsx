@@ -8,7 +8,7 @@ export default function Navigation({ close }: { close?: () => void }) {
   return (
     <>
       <Link
-        to="/"
+        to="/dashboard"
         className="brand"
         onClick={close}
         aria-label="Responsive Studio dashboard"
@@ -38,7 +38,7 @@ export default function Navigation({ close }: { close?: () => void }) {
             {group.links.map(([name, path, Icon]) => (
               <NavLink
                 to={path}
-                end={path === "/"}
+                end={path === "/dashboard"}
                 key={path}
                 onClick={close}
                 title={ui.collapsed ? name : undefined}

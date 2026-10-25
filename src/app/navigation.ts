@@ -20,7 +20,7 @@ export const navigationGroups: {
   {
     label: "Overview",
     links: [
-      ["Dashboard", "/", House],
+      ["Dashboard", "/dashboard", House],
       ["Recent Activity", "/activity", Activity],
     ],
   },

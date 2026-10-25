@@ -1,6 +1,6 @@
 import { expect, type Page } from "@playwright/test";
 export async function createProject(page: Page) {
-  await page.goto("/");
+  await page.goto("/dashboard");
   await page.getByRole("button", { name: "New project", exact: true }).click();
   await page.getByLabel("Project name").fill("Responsive fixture");
   await page

@@ -176,7 +176,7 @@ test("responsive routes and themes have no page overflow", async ({ page }) => {
         .getByRole("combobox", { name: "Theme", exact: true })
         .selectOption(theme);
       for (const route of [
-        "/",
+        "/dashboard",
         "/projects",
         "/screenshots",
         "/workspace",
@@ -209,7 +209,7 @@ test("axe accessibility, dialog keyboard behavior and mobile navigation", async 
       .getByRole("combobox", { name: "Theme", exact: true })
       .selectOption(theme);
     for (const route of [
-      "/",
+      "/dashboard",
       "/projects",
       "/screenshots",
       "/workspace",
@@ -232,7 +232,7 @@ test("axe accessibility, dialog keyboard behavior and mobile navigation", async 
       ).toEqual([]);
     }
   }
-  await page.goto("/");
+  await page.goto("/dashboard");
   const trigger = page.getByRole("button", {
     name: "New project",
     exact: true,
@@ -254,7 +254,7 @@ test("axe accessibility, dialog keyboard behavior and mobile navigation", async 
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
 test("captures empty-state visual references", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/dashboard");
   await expect(
     page.getByRole("heading", { name: "Dashboard", exact: true }),
   ).toBeVisible();
@@ -271,7 +271,7 @@ test("captures empty-state visual references", async ({ page }) => {
   await page
     .getByRole("combobox", { name: "Theme", exact: true })
     .selectOption("dark");
-  await page.goto("/");
+  await page.goto("/dashboard");
   await expect(
     page.getByRole("heading", { name: "Dashboard", exact: true }),
   ).toBeVisible();

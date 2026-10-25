@@ -36,6 +36,7 @@ const Reports = lazy(() => import("./features/reports/Reports"));
 const Settings = lazy(() => import("./features/settings/Settings"));
 const Presets = lazy(() => import("./features/settings/Presets"));
 const DataManagement = lazy(() => import("./features/settings/DataManagement"));
+const Landing = lazy(() => import("./features/landing/Landing"));
 function Shell() {
   const ui = useUI();
   const data = useData();
@@ -120,7 +121,9 @@ function Shell() {
             >
               <Menu size={20} />
             </Button>
-            <House size={17} className="muted breadcrumb-home" />
+            <Link to="/" aria-label="Responsive Studio home">
+              <House size={17} className="muted breadcrumb-home" />
+            </Link>
             <span className="breadcrumb">
               {group?.label ?? "Workspace"}
               <span>/</span>
@@ -179,7 +182,7 @@ function Shell() {
           ) : (
             <Suspense fallback={<Loading />}>
               <Routes>
-                <Route path="/" element={<Dashboard data={data} />} />
+                <Route path="/dashboard" element={<Dashboard data={data} />} />
                 <Route path="/projects" element={<Projects data={data} />} />
                 <Route path="/workspace" element={<Workspace data={data} />} />
                 <Route
@@ -225,7 +228,7 @@ function Shell() {
                       description="Return to your testing dashboard."
                       action={
                         <Button asChild>
-                          <Link to="/">Dashboard</Link>
+                          <Link to="/dashboard">Dashboard</Link>
                         </Button>
                       }
                     />
@@ -302,11 +305,25 @@ class ErrorBoundary extends Component<
     );
   }
 }
+function RouteScrollReset() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    if (!window.location.hash) window.scrollTo({ top: 0, behavior: "instant" });
+  }, [pathname]);
+  return null;
+}
+
 export default function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
-        <Shell />
+        <RouteScrollReset />
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="*" element={<Shell />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </ErrorBoundary>
   );

@@ -12,6 +12,7 @@ dist
 test-results
 test-results-production
 playwright-report
+.playwright-cli/
 /output/
 coverage/
 *.tsbuildinfo

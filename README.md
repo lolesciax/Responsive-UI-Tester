@@ -13,6 +13,8 @@ npm run dev -- --host 127.0.0.1
 
 Open the address printed by Vite, normally http://127.0.0.1:5173.
 
+The landing page at `/` introduces the tools, includes an interactive viewport example, and explains the review workflow, requirements, and common questions. Choose **Open Studio** to enter the dashboard at `/dashboard`. The home icon in the app header returns to the guide.
+
 ```powershell
 npm run check
 npx playwright install chromium
