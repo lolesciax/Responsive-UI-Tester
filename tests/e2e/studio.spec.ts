@@ -164,13 +164,16 @@ test("complete local-first evidence workflow", async ({ page }, testInfo) => {
   ).toHaveCount(0);
   expect(errors).toEqual([]);
 });
-test("responsive routes and themes have no page overflow", async ({ page }) => {
-  test.setTimeout(180000);
-  await createProject(page);
-  await uploadFixtures(page);
-  for (const width of [320, 375, 390, 768, 1024, 1280, 1440, 1920]) {
-    await page.setViewportSize({ width, height: 1000 });
-    for (const theme of ["light", "dark"]) {
+// Each viewport/theme gets its own timeout and failure artifacts. Keeping all
+// 192 route visits in one test exhausted a shared timeout on slower CI runners.
+for (const width of [320, 375, 390, 768, 1024, 1280, 1440, 1920]) {
+  for (const theme of ["light", "dark"]) {
+    test(`responsive routes have no page overflow at ${width}px in ${theme}`, async ({
+      page,
+    }) => {
+      await createProject(page);
+      await uploadFixtures(page);
+      await page.setViewportSize({ width, height: 1000 });
       await page.goto("/settings");
       await page
         .getByRole("combobox", { name: "Theme", exact: true })
@@ -189,16 +192,19 @@ test("responsive routes and themes have no page overflow", async ({ page }) => {
         "/data",
         "/activity",
       ]) {
-        await page.goto(route);
-        await expect(page.locator("h1")).toBeVisible();
-        const overflow = await page.evaluate(
-          () => document.documentElement.scrollWidth > window.innerWidth,
-        );
-        expect(overflow, `${route} at ${width}px in ${theme}`).toBe(false);
+        await test.step(route, async () => {
+          await page.goto(route);
+          await expect(page.locator("h1")).toBeVisible();
+          await page.evaluate(() => document.fonts.ready.then(() => undefined));
+          const overflow = await page.evaluate(
+            () => document.documentElement.scrollWidth > window.innerWidth,
+          );
+          expect(overflow, `${route} at ${width}px in ${theme}`).toBe(false);
+        });
       }
-    }
+    });
   }
-});
+}
 test("axe accessibility, dialog keyboard behavior and mobile navigation", async ({
   page,
 }) => {

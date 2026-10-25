@@ -25,6 +25,8 @@ npm run test:preview
 
 ## Artifacts
 
+The responsive matrix uses 16 independent viewport/theme tests, each visiting 12 routes with populated screenshot evidence. Each case gets the configured test timeout, and named route steps identify failures. Run just this matrix with `npm run test:e2e -- --grep "responsive routes"`.
+
 Development traces go to `test-results/`, production artifacts to `test-results-production/`, and visual captures to `output/playwright/`. All are gitignored and can be regenerated. The original design concept remains at `docs/design/dashboard-concept.png`; generated QA captures are not source assets.
 
 ## Verification status
